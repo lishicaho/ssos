@@ -1,0 +1,9 @@
+192.168.1.233 - - [14/Nov/2018:10:38:42 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-1 4017
+192.168.1.233 - - [14/Nov/2018:10:46:31 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-1 4186
+192.168.1.233 - - [14/Nov/2018:10:49:32 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-1 4348
+192.168.1.233 - - [14/Nov/2018:11:14:35 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-1 4161
+192.168.1.233 - - [14/Nov/2018:11:16:44 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-3 18
+192.168.1.233 - - [14/Nov/2018:11:23:26 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-5 4
+192.168.1.233 - - [14/Nov/2018:11:30:25 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-7 4
+192.168.1.233 - - [14/Nov/2018:11:43:13 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-9 3
+192.168.1.233 - - [14/Nov/2018:11:59:27 +0800] "GET /ssos/jnyth/doLogin.do?userID=5d836edf5f62a1f4&macID=60:14:B3:BE:FD:AF&isSuccess=true HTTP/1.1" 200 24 http-bio-5488-exec-1 5
