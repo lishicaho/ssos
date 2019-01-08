@@ -17,10 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.imooc.myo2o.entity.RequestInfo;
 import com.imooc.myo2o.service.TokenService;
+import com.imooc.myo2o.util.GetMacAddress;
 import com.imooc.myo2o.util.IPUtil;
 import com.imooc.myo2o.util.MacUtil;
 import com.imooc.myo2o.util.TokenCache;
 import com.imooc.myo2o.util.TokenProcessor;
+import com.imooc.myo2o.util.UdpGetClientMacAddr;
 import com.imooc.myo2o.web.jnyth.JnythSSOController;
 
 @Service
@@ -51,9 +53,24 @@ public class NjTokenServiceImpl implements TokenService {
 	public String generateToken(RequestInfo requestInfo) {
 		try {
 			// TODO(lsc): 这个地方获取的ip是否有问题?参考IpUtil
-			String macId = MacUtil.getLocalMac(requestInfo.getIp());
+			//String macId = MacUtil.getLocalMac(requestInfo.getIp());
+			
+			String macId = null;
+    		//获取请求IP
+			String ip = requestInfo.getIp();
+			long startTime=System.currentTimeMillis();
+			//判断是否是本机请求
+			/*if(ip.equals(IPUtil.getLocalIP())){
+				macId = MacUtil.getLocalMac();
+			}else{
+				UdpGetClientMacAddr ugcm = new UdpGetClientMacAddr(ip);
+				//A方案获取，IE首推
+				macId = ugcm.GetRemoteMacAddr();
+			}*/
+			 macId = new GetMacAddress().getMacAddress(ip);
+			String newMacId=macId.toUpperCase(); 
 			String url = String.format(ssoUri + "/jnyth/doLogin?userID=%s&isSuccess=true&macID=%s",
-					requestInfo.getUsername(), macId);
+					requestInfo.getUsername(), newMacId);
 			String token = restTemplate.getForObject(url, String.class);
 			return token;
 		} catch (Exception ex) {
@@ -66,9 +83,11 @@ public class NjTokenServiceImpl implements TokenService {
 	public String checkToken(String token, HttpServletRequest requestInfo) {
 		try {
 			//String ip="192.168.60.224";
-			String macId = MacUtil.getLocalMac(IPUtil.getRemoteIp(requestInfo));
+			//String macId = MacUtil.getLocalMac(IPUtil.getRemoteIp(requestInfo));
+			String macId = new GetMacAddress().getMacAddress(IPUtil.getRemoteIp(requestInfo));
+			String newMacId=macId.toUpperCase(); 
 			//String macId = MacUtil.getLocalMac(ip);
-			String url = String.format(ssoUri + "/jnyth/tokenCheck?reqToken=%s&macID=%s", token, macId);
+			String url = String.format(ssoUri + "/jnyth/tokenCheck?reqToken=%s&macID=%s", token, newMacId);
 		    //String url = String.format("http://localhost:8080/ssos/jnyth/tokenCheck?reqToken=%s&macID=%s", token, macId);
 			Boolean isOk = restTemplate.getForObject(url, Boolean.class);
 			if (isOk) {
@@ -84,8 +103,10 @@ public class NjTokenServiceImpl implements TokenService {
 	@Override
 	public String getUserCode(RequestInfo requestInfo) {
 		try {
-			String macId = MacUtil.getLocalMac(requestInfo.getIp());
-			String url = String.format(ssoUri + "/jnyth/isNeedLogin?macID=%s", macId);
+			//String macId = MacUtil.getLocalMac(requestInfo.getIp());
+			String macId = new GetMacAddress().getMacAddress(requestInfo.getIp());
+			String newMacId=macId.toUpperCase(); 
+			String url = String.format(ssoUri + "/jnyth/isNeedLogin?macID=%s", newMacId);
 		    //String url = String.format("http://localhost:8080/ssos/jnyth/isNeedLogin?macID=%s", macId);
 			String userInfo = restTemplate.getForObject(url, String.class);
 			if (!"0".equals(userInfo)) {
@@ -125,7 +146,7 @@ public class NjTokenServiceImpl implements TokenService {
 		//result set
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		//If login, it will be released directly.Set success result set
-		System.out.println("检验时获取macID="+macID);
+		System.out.println(TokenCache.getKey("isLogin"+macID));
 		if("true".equals(TokenCache.getKey("isLogin"+macID))){
 			logger.info("User is logged in, set parameters");
 			String userID = TokenCache.getKey("userID"+macID);
